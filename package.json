@@ -16,6 +16,10 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
+    "@gooddata/api-client-bear": "^8.11.0",
+    "@gooddata/sdk-backend-bear": "^8.11.0",
+    "@gooddata/sdk-model": "^8.11.0",
+    "@gooddata/sdk-ui": "^8.11.0",
     "@mantine/core": "^5.7.1",
     "@mantine/form": "^5.7.1",
     "@mantine/hooks": "^5.7.1",
