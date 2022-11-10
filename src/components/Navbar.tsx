@@ -2,7 +2,8 @@ import { createStyles, Navbar, Title } from "@mantine/core";
 import Image from "next/image";
 import { useState } from "react";
 
-import Forms from "./DomainConnector";
+import DomainConnector from "./DomainConnector";
+import WorkspaceSelector from "./WorkspaceSelector";
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -38,7 +39,6 @@ const useStyles = createStyles((theme) => ({
 export default function DoubleNavbar() {
     const { classes, cx } = useStyles();
     const [active, setActive] = useState("Releases");
-    const [activeLink, setActiveLink] = useState("Settings");
 
     return (
         <Navbar width={{ md: 400 }}>
@@ -49,7 +49,8 @@ export default function DoubleNavbar() {
                         {active}
                     </Title>
 
-                    <Forms />
+                    <DomainConnector />
+                    <WorkspaceSelector />
                 </div>
             </Navbar.Section>
         </Navbar>

@@ -3,7 +3,7 @@ import { TextInput, Button, Group, Box, Modal as MantineModal } from "@mantine/c
 import { useForm } from "@mantine/form";
 import { IconDots } from "@tabler/icons";
 
-import SignIn from "./signin";
+import SignIn from "./SignIn";
 import { AuthContext } from "../contexts/authContext";
 
 type FormProps = {

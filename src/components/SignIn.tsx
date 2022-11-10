@@ -12,7 +12,6 @@ import {
     Button,
 } from "@mantine/core";
 
-import { getBackend } from "../services";
 import { AuthContext } from "../contexts/authContext";
 
 interface ISignIn {
@@ -31,6 +30,12 @@ const SignIn: FC<ISignIn> = ({ domain, toggleModal }) => {
         try {
             setLoading(true);
             state.signIn(email, password, domain);
+
+            // Store credentials + domain for later use
+            localStorage.setItem('config', email);
+            localStorage.setItem('password', password);
+            localStorage.setItem('domain', domain);
+
             toggleModal();
         } catch (error) {
             console.error(error);
