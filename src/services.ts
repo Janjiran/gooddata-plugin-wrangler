@@ -11,6 +11,6 @@ export const getBackend = async (
     domain: string,
 ): Promise<IAnalyticalBackend> => {
     return bearFactory()
-        .onHostname(domain)
+        .onHostname("")
         .withAuthentication(new FixedLoginAndPasswordAuthProvider(username, password));
 };

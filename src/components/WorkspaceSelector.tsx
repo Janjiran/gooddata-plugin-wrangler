@@ -12,6 +12,7 @@ const WorkspaceSelector = () => {
     const { classes } = useStyles();
 
     const backend = useBackend();
+    console.log("🚀 ~ file: WorkspaceSelector.tsx ~ line 15 ~ WorkspaceSelector ~ backend", backend)
 
     useEffect(() => {
         backend?.workspaces().forCurrentUser().query();

@@ -3,8 +3,8 @@
 const rewrites = () => {
     return [
         {
-            source: "/gdc",
-            destination: "https://fashion-police.on.gooddata.com",
+            source: "/gdc/:path*",
+            destination: "/api/gdc",
         },
     ];
 };

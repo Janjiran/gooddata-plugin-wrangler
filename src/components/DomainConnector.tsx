@@ -49,7 +49,7 @@ const DomainConnector = () => {
                 />
 
                 <Group position="right" mt="md">
-                    <Button disabled={!!backend} color={backend ? "green" : "blue"} type="submit">
+                    <Button color={backend ? "green" : "blue"} type="submit">
                         {backend ? "Connected" : "Connect"}
                     </Button>
                 </Group>
