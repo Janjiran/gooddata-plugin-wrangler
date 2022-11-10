@@ -8,7 +8,7 @@ type PluginsGalleryProps = {
 };
 
 export const PluginsGallery: FC<PluginsGalleryProps> = ({ onEnablePluginClick }) => {
-    const pluginIds = Object.keys(plugins);
+    const pluginIds = Object.keys(plugins).sort();
 
     return (
         <Grid sx={({ spacing }) => ({ flex: 1, padding: spacing.md })}>
