@@ -13,7 +13,7 @@ const WorkspaceSelector = () => {
   const backend = useBackend();
   console.log("🚀 ~ file: WorkspaceSelector.tsx ~ line 14 ~ WorkspaceSelector ~ backend", backend)
 
-  // console.log(backend?.workspaces().forCurrentUser().query())
+  console.log(backend?.workspaces().forCurrentUser().query())
   
   return (
     <Box sx={{ maxWidth: 300 }} className={classes.box} mx="auto">

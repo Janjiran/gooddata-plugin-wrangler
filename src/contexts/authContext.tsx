@@ -67,6 +67,7 @@ const AuthContextProvider: FC<IAuthContextProvider> = ({ children }) => {
 
     return (
         <AuthContext.Provider value={value}>
+            {/* @ts-ignore */}
             <BackendProvider backend={value.backend}>
                 {/* <WorkspaceProvider workspace={value.workspace}> */}
                 {children}
