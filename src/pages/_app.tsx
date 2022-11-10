@@ -15,18 +15,18 @@ export default function App(props: AppProps) {
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
             </Head>
 
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          /** Put your mantine theme override here */
-          colorScheme: "light",
-        }}
-      >
-        <AuthContextProvider>
-          <Component {...pageProps} />
-        </AuthContextProvider>
-      </MantineProvider>
-    </>
-  );
+            <MantineProvider
+                withGlobalStyles
+                withNormalizeCSS
+                theme={{
+                    /** Put your mantine theme override here */
+                    colorScheme: "light",
+                }}
+            >
+                <AuthContextProvider>
+                    <Component {...pageProps} />
+                </AuthContextProvider>
+            </MantineProvider>
+        </>
+    );
 }

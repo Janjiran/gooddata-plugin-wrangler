@@ -1,6 +1,4 @@
-import bearFactory, {
-  FixedLoginAndPasswordAuthProvider,
-} from "@gooddata/sdk-backend-bear";
+import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 // const bearClient = factory();
@@ -10,10 +8,9 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 export const getBackend = async (
     username: string,
     password: string,
-    domain: string
-    ): Promise<IAnalyticalBackend> => {
-
-  return bearFactory()
-    .onHostname(domain)
-    .withAuthentication(new FixedLoginAndPasswordAuthProvider(username, password));
+    domain: string,
+): Promise<IAnalyticalBackend> => {
+    return bearFactory()
+        .onHostname(domain)
+        .withAuthentication(new FixedLoginAndPasswordAuthProvider(username, password));
 };

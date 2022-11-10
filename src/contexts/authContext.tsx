@@ -18,9 +18,8 @@ const authDefault: AuthDefaultProps = {
     backend: null,
     workspace: null,
     setAuthState: () => {},
-    signIn: () => {}
+    signIn: () => {},
 };
-
 
 export const AuthContext = createContext<AuthDefaultProps>(authDefault);
 
@@ -32,14 +31,14 @@ const AuthContextProvider: FC<IAuthContextProvider> = ({ children }) => {
 
         setAuthState((prev) => ({
             ...prev,
-            backend
-          }));
+            backend,
+        }));
     };
 
     const value = {
         ...authState,
         setAuthState,
-        signIn
+        signIn,
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
