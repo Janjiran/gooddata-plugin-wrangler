@@ -5,7 +5,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "prettier": "prettier \"src/**/*.{js,ts,tsx,json,css}\"",
+    "prettier:check": "yarn prettier --check",
+    "prettier:fix": "yarn prettier --write",
+    "validate-ts": "tsc -noEmit",
+    "validate": " yarn validate-ts && yarn lint && yarn prettier:check"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -20,10 +26,19 @@
     "@types/react-dom": "18.0.8",
     "cross-env": "^7.0.3",
     "eslint": "8.27.0",
-    "eslint-config-next": "13.0.2",
     "next": "13.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.8.4"
+  },
+  "devDependencies": {
+    "eslint-config-next": "13.0.2",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.30.5",
+    "prettier": "^2.7.1"
   }
 }
