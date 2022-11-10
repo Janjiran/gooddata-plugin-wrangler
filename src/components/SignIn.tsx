@@ -1,4 +1,3 @@
-import { useState, FC, useContext } from "react";
 import {
     TextInput,
     PasswordInput,
@@ -11,6 +10,7 @@ import {
     Group,
     Button,
 } from "@mantine/core";
+import { useState, FC, useContext } from "react";
 
 import { AuthContext } from "../contexts/authContext";
 
@@ -32,9 +32,9 @@ const SignIn: FC<ISignIn> = ({ domain, toggleModal }) => {
             state.signIn(email, password, domain);
 
             // Store credentials + domain for later use
-            localStorage.setItem('config', email);
-            localStorage.setItem('password', password);
-            localStorage.setItem('domain', domain);
+            localStorage.setItem("config", email);
+            localStorage.setItem("password", password);
+            localStorage.setItem("domain", domain);
 
             toggleModal();
         } catch (error) {

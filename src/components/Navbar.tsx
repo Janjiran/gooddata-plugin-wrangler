@@ -37,8 +37,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function DoubleNavbar() {
-    const { classes, cx } = useStyles();
-    const [active, setActive] = useState("Releases");
+    const { classes} = useStyles();
+    const [active] = useState("Releases");
 
     return (
         <Navbar width={{ md: 400 }}>

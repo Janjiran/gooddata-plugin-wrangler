@@ -1,6 +1,16 @@
-import { createContext, ReactNode, useState, FC, Dispatch, SetStateAction, useContext, useEffect } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { BackendProvider } from "@gooddata/sdk-ui";
+import {
+    createContext,
+    ReactNode,
+    useState,
+    FC,
+    Dispatch,
+    SetStateAction,
+    useContext,
+    useEffect,
+} from "react";
+
 import { getBackend } from "../services";
 
 interface IAuthContextProvider {
@@ -26,17 +36,25 @@ export const AuthContext = createContext<AuthDefaultProps>(authDefault);
 export const useAuth = (): AuthDefaultProps => {
     const auth = useContext(AuthContext);
     return auth || authDefault;
-  };
+};
 
 const AuthContextProvider: FC<IAuthContextProvider> = ({ children }) => {
     const [authState, setAuthState] = useState(authDefault);
 
     const signIn = async (email: string | null, password: string | null, domain: string | null) => {
         if (!email || !password || !domain) {
-            return console.warn('One of following parameters was not supplied: ', 'Email: ', email, 'Password: ', password, 'Domain: ', domain)
-        };
+            return console.warn(
+                "One of following parameters was not supplied: ",
+                "Email: ",
+                email,
+                "Password: ",
+                password,
+                "Domain: ",
+                domain,
+            );
+        }
         const backend = await getBackend(email, password, domain);
-        
+
         setAuthState((prev) => ({
             ...prev,
             backend,
@@ -44,9 +62,9 @@ const AuthContextProvider: FC<IAuthContextProvider> = ({ children }) => {
     };
 
     const getConfig = () => {
-        const email = localStorage.getItem('email');
-        const password = localStorage.getItem('password');
-        const domain = localStorage.getItem('domain');
+        const email = localStorage.getItem("email");
+        const password = localStorage.getItem("password");
+        const domain = localStorage.getItem("domain");
 
         return { email, password, domain };
     };
@@ -62,7 +80,6 @@ const AuthContextProvider: FC<IAuthContextProvider> = ({ children }) => {
         if (email && password && domain) {
             signIn(email, password, domain);
         }
-
     }, []);
 
     return (

@@ -1,13 +1,11 @@
-import { Badge, Button, Card, createStyles, Group, Image, Switch, Text } from "@mantine/core";
+import { Button, Card, createStyles, Group, Image, Switch, Text } from "@mantine/core";
 import { FC } from "react";
 
 import { IPlugin } from "../../../../types/plugin";
 
 type PluginCardProps = Pick<IPlugin, "name" | "url" | "image" | "description">;
 
-const useStyles = createStyles((theme) => ({}));
-
-export const PluginCard: FC<PluginCardProps> = ({ name, url, image, description }) => {
+export const PluginCard: FC<PluginCardProps> = ({ name, image, description }) => {
     return (
         <Card shadow="sm" p="lg" radius="md" withBorder>
             <Card.Section>

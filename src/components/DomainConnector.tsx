@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
 import { TextInput, Button, Group, Box, Modal as MantineModal } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconDots } from "@tabler/icons";
+import { useContext, useState } from "react";
 
-import SignIn from "./SignIn";
 import { AuthContext } from "../contexts/authContext";
+import SignIn from "./SignIn";
 
 type FormProps = {
     domain: string;
@@ -30,10 +30,8 @@ const DomainConnector = () => {
         },
     });
 
-    const onSubmit = async (values: FormProps) => {
-        try {
-            setModalOpened(!modalOpened);
-        } catch (error) {}
+    const onSubmit = async () => {
+        setModalOpened(!modalOpened);
     };
 
     const toggleModal = () => setModalOpened(false);
