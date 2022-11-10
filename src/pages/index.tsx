@@ -1,9 +1,12 @@
-import Forms from '../components/forms';
+import Forms from '../components/DomainConnector';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
 
   return (
-    <Forms />
+    <>
+      <Navbar />
+    </>
   );
 }
 
