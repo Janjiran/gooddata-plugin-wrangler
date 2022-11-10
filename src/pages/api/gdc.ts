@@ -22,8 +22,10 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
     target: target,
     headers: {
         host: 'fashion-police.on.gooddata.com',
+        // @ts-ignore
         origin: null,
     },
+    // @ts-ignore
     onProxyReq(proxyReq, req, res) {
       proxyReq.setHeader("accept-encoding", "identity");
     },
