@@ -1,12 +1,27 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import {execSync} from 'child_process'
+import type {NextApiRequest, NextApiResponse} from 'next'
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+type LinkPluginRequestBody = {
+    gdcUsername: string;
+    gdcPassword: string;
+    workspaceId: string;
+    dashboardId: string;
+    backendUrl: string;
+    pluginId: string;
+    backendType?: 'bear' | 'tiger'
+}
+
+interface AddPluginRequest extends NextApiRequest {
+    body: LinkPluginRequestBody
+}
+
+export default function linkPlugin(
+    req: AddPluginRequest,
+    res: NextApiResponse
 ) {
-  const execSync = require('child_process').execSync;
+    const {gdcUsername, gdcPassword, pluginId, backendUrl, workspaceId, dashboardId, backendType = 'bear'} = req.body;
 
-  const output = execSync('npx @gooddata/plugin-toolkit dashboard-plugin add', { encoding: 'utf-8' });
+    const output = execSync(`cross-env GDC_USERNAME=${gdcUsername} GDC_PASSWORD=${gdcPassword}  npx @gooddata/plugin-toolkit dashboard-plugin link "${pluginId}" --backend ${backendType} --hostname "${backendUrl}" --workspace-id "${workspaceId}" --dashboard-id "${dashboardId}"`, {encoding: 'utf-8'});
 
-  res.status(200).json(JSON.stringify(output))
+    res.status(200).json(JSON.stringify(output))
 }
