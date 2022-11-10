@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import React from "react";
 
 import { PluginCard } from "./PluginCard";
-import plugins from "../assets/plugins";
+import plugins from "../plugins";
 
 export default {
     title: "PluginsGallery/PluginCard",
