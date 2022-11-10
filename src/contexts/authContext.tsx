@@ -1,5 +1,6 @@
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { BackendProvider } from "@gooddata/sdk-ui";
+import { IListedDashboard } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import {
     createContext,
     ReactNode,
@@ -20,6 +21,7 @@ interface IAuthContextProvider {
 type AuthDefaultProps = {
     backend: IAnalyticalBackend | null;
     workspace: string | null;
+    dashboard: IListedDashboard | null;
     setAuthState: Dispatch<SetStateAction<AuthDefaultProps>>;
     signIn: (email: string | null, password: string | null, domain: string | null) => void;
 };
@@ -27,6 +29,7 @@ type AuthDefaultProps = {
 const authDefault: AuthDefaultProps = {
     backend: null,
     workspace: null,
+    dashboard: null,
     setAuthState: () => {},
     signIn: () => {},
 };
@@ -86,9 +89,10 @@ const AuthContextProvider: FC<IAuthContextProvider> = ({ children }) => {
         <AuthContext.Provider value={value}>
             {/* @ts-ignore */}
             <BackendProvider backend={value.backend}>
-                {/* <WorkspaceProvider workspace={value.workspace}> */}
+                {/* @ts-ignore */}
+                <WorkspaceProvider workspace={value.workspace}>
                 {children}
-                {/* </WorkspaceProvider> */}
+                </WorkspaceProvider>
             </BackendProvider>
         </AuthContext.Provider>
     );

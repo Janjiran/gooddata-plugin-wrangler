@@ -1,6 +1,7 @@
 import { createStyles, Navbar, Title } from "@mantine/core";
 import Image from "next/image";
 import { useState } from "react";
+import DasboardSelector from "./DasboardSelector";
 
 import DomainConnector from "./DomainConnector";
 import WorkspaceSelector from "./WorkspaceSelector";
@@ -38,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 
 export default function DoubleNavbar() {
     const { classes} = useStyles();
-    const [active] = useState("Releases");
+    const [active] = useState("Plugin Wrangler");
 
     return (
         <Navbar width={{ md: 400 }}>
@@ -51,6 +52,7 @@ export default function DoubleNavbar() {
 
                     <DomainConnector />
                     <WorkspaceSelector />
+                    <DasboardSelector />
                 </div>
             </Navbar.Section>
         </Navbar>

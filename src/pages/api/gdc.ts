@@ -13,7 +13,6 @@ export const config = {
 };
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  console.log("🚀 ~ file: gdc.ts ~ line 16 ~ req", req)
   return httpProxyMiddleware(req, res, {
     // You can use the `http-proxy` option
     changeOrigin: true,
