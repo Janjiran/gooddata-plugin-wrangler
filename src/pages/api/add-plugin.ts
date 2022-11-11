@@ -6,7 +6,7 @@ type AddPluginRequestBody = {
     gdcUsername: string;
     gdcPassword: string;
     pluginUrl: string;
-    backendUrl: string;
+    hostname: string;
     workspaceId: string;
     backendType?: "bear" | "tiger";
 };
@@ -15,13 +15,33 @@ interface AddPluginRequest extends NextApiRequest {
     body: AddPluginRequestBody;
 }
 
-export default function addPlugin(req: AddPluginRequest, res: NextApiResponse) {
-    const { gdcUsername, gdcPassword, pluginUrl, backendUrl, workspaceId, backendType = "bear" } = req.body;
+export default async function addPlugin(req: AddPluginRequest, res: NextApiResponse) {
+    const {
+        gdcUsername,
+        gdcPassword,
+        pluginUrl,
+        hostname,
+        workspaceId,
+        backendType = "bear",
+        // @ts-ignore
+    } = JSON.parse(req.body);
 
-    const output = execSync(
-        `cross-env GDC_USERNAME=${gdcUsername} GDC_PASSWORD=${gdcPassword}  npx @gooddata/plugin-toolkit dashboard-plugin add "${pluginUrl}" --backend ${backendType} --hostname "${backendUrl}" --workspace-id "${workspaceId}"`,
-        { encoding: "utf-8" },
+    const { promisify } = require("util");
+    const exec = promisify(require("child_process").exec);
+
+    const stdout = await exec(
+        `cross-env GDC_USERNAME=${gdcUsername} GDC_PASSWORD=${gdcPassword}  npx @gooddata/plugin-toolkit dashboard-plugin add "${pluginUrl}" --backend ${backendType} --hostname "${hostname}" --workspace-id "${workspaceId}"`,
     );
+    console.log("🚀 ~ file: add-plugin.ts ~ line 26 ~ addPlugin ~ nameOutput", stdout);
 
-    res.status(200).json(JSON.stringify(output));
+    const data = stdout.split(" ").at(-1).replace('\\n"', "");
+    console.log("🚀 ~ file: add-plugin.ts ~ line 38 ~ addPlugin ~ data", data)
+    res.status(200).send(data);
+
+    // const output = execSync(
+    //     `cross-env GDC_USERNAME=${gdcUsername} GDC_PASSWORD=${gdcPassword}  npx @gooddata/plugin-toolkit dashboard-plugin add "${pluginUrl}" --backend ${backendType} --hostname "${hostname}" --workspace-id "${workspaceId}"`,
+    //      { encoding: "utf-8", stdio: 'inherit' },
+    // );
+
+    // res.status(200).json(JSON.stringify(output));
 }

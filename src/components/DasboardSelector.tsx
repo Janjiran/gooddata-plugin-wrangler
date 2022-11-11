@@ -46,7 +46,7 @@ const DasboardSelector = () => {
                 placeholder="Pick one"
                 searchable
                 clearable
-                disabled={isLoading}
+                disabled={isLoading || !state.workspace}
                 nothingFound="No options"
                 onChange={onChange}
                 data={dashboards?.map((d) => ({ label: d.title, value: d.identifier })) || ['']}

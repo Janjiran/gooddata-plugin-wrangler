@@ -22,6 +22,7 @@ type AuthDefaultProps = {
     backend: IAnalyticalBackend | null;
     workspace: string | null;
     dashboard: IListedDashboard | null;
+    domain: string | null;
     setAuthState: Dispatch<SetStateAction<AuthDefaultProps>>;
     signIn: (email: string | null, password: string | null, domain: string | null) => void;
 };
@@ -30,6 +31,7 @@ const authDefault: AuthDefaultProps = {
     backend: null,
     workspace: null,
     dashboard: null,
+    domain: null,
     setAuthState: () => {},
     signIn: () => {},
 };
@@ -56,11 +58,12 @@ const AuthContextProvider: FC<IAuthContextProvider> = ({ children }) => {
                 domain,
             );
         }
-        const backend = await getBackend(email, password, domain);
+        const backend = await getBackend(email, password);
 
         setAuthState((prev) => ({
             ...prev,
             backend,
+            domain
         }));
     };
 
@@ -91,7 +94,7 @@ const AuthContextProvider: FC<IAuthContextProvider> = ({ children }) => {
             <BackendProvider backend={value.backend}>
                 {/* @ts-ignore */}
                 <WorkspaceProvider workspace={value.workspace}>
-                {children}
+                    {children}
                 </WorkspaceProvider>
             </BackendProvider>
         </AuthContext.Provider>

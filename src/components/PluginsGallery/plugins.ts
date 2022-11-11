@@ -88,7 +88,7 @@ const plugins: Record<string, IPlugin> = {
     },
     tooltip: {
         name: "Tooltip",
-        url: "",
+        url: "https://gdc-ms-pub.s3.amazonaws.com/AIDA5QKRHPNLYV746FYP3_gdc-ms-pub_gooddata-internal-training/plugins/tooltip/v106/dist/dashboardPlugin/dp_tooltip_plugin.js",
         image: "/images/pluginPreview/tooltip.png",
         description:
             "Sometimes insight names might be overwhelming and a bit cryptic. Alleviate the pain of understanding for your end users with custom tooltips for insights.",

@@ -57,6 +57,7 @@ const WorkspaceSelector = () => {
                 placeholder="Pick one"
                 searchable
                 clearable
+                disabled={!state.domain}
                 nothingFound="No options"
                 onChange={onChange}
                 data={workspaceNames || [""]}

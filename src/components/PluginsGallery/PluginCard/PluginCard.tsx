@@ -1,5 +1,7 @@
 import { Button, Card, Group, Image, Switch, Text } from "@mantine/core";
-import { ChangeEventHandler, FC, useState } from "react";
+import { FC, useState } from "react";
+import { useAuth } from "../../../contexts/authContext";
+import { addPlugin, linkPlugin } from "../../../services";
 
 import { IPlugin } from "../../../types/plugin";
 import { ConfigurationDrawer } from "../../ConfigurationDrawer";
@@ -8,17 +10,64 @@ type PluginCardProps = IPlugin & {
     onEnableClick: (pluginUrl: string, enable: boolean) => void;
 };
 
-export const PluginCard: FC<PluginCardProps> = ({
-    name,
-    image,
-    configMd,
-    description,
-    url,
-    onEnableClick,
-}) => {
-    const handleEnableSwitchChange: ChangeEventHandler = (e) => {
-        // @ts-ignore
-        onEnableClick(url, e.target.value);
+export const PluginCard: FC<PluginCardProps> = ({ name, image, description, url, configMd }) => {
+    const state = useAuth();
+
+    const [loading, setLoading] = useState(false);
+    const [unlinkLoading, setUnlinkLoading] = useState(false);
+
+    const enablePlugin = async () => {
+        try {
+            setLoading(true);
+
+            const gdcUsername = localStorage.getItem("email") as string;
+            const gdcPassword = localStorage.getItem("password") as string;
+
+            await addPlugin({
+                gdcUsername,
+                gdcPassword,
+                pluginUrl: url,
+                hostname: state.domain as string,
+                workspaceId: state.workspace as string,
+            });
+        } catch (err) {
+            console.warn(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const unlinkPlugin = async () => {
+        try {
+            setUnlinkLoading(true);
+
+            const gdcUsername = localStorage.getItem("email") as string;
+            const gdcPassword = localStorage.getItem("password") as string;
+
+            const data = await addPlugin({
+                gdcUsername,
+                gdcPassword,
+                pluginUrl: url,
+                hostname: state.domain as string,
+                workspaceId: state.workspace as string,
+            });
+            console.log("🚀 ~ file: PluginCard.tsx ~ line 53 ~ unlinkPlugin ~ data", data);
+
+            // const parseData = await data.json();
+            // const pluginObjectId = parseData.split(' ').at(-1).replace('\\n\"', '');
+
+            // await linkPlugin({
+            //     gdcUsername,
+            //     gdcPassword,
+            //     pluginId: pluginObjectId,
+            //     hostname: state.domain as string,
+            //     workspaceId: state.workspace as string,
+            // });
+        } catch (err) {
+            console.warn(err);
+        } finally {
+            setUnlinkLoading(false);
+        }
     };
 
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -43,9 +92,10 @@ export const PluginCard: FC<PluginCardProps> = ({
 
                 <Group position="apart" mt="md" mb="xs">
                     <Text weight={500}>{name}</Text>
-                    <Switch onChange={handleEnableSwitchChange} color="pink">
-                        Enable
-                    </Switch>
+                    <Button variant="light" color="blue" radius="md">
+                        Demo
+                        {/*    TODO link to demo dashboard*/}
+                    </Button>
                 </Group>
 
                 <Text size="sm" color="dimmed">
@@ -62,10 +112,6 @@ export const PluginCard: FC<PluginCardProps> = ({
                         gap: theme.spacing.sm,
                     })}
                 >
-                    <Button variant="light" color="blue" radius="md">
-                        Demo
-                        {/*    TODO link to demo dashboard*/}
-                    </Button>
                     <Button
                         fullWidth
                         variant="filled"
@@ -74,6 +120,30 @@ export const PluginCard: FC<PluginCardProps> = ({
                         onClick={() => setDrawerOpen(true)}
                     >
                         Configure
+                    </Button>
+                    <Button
+                        onClick={enablePlugin}
+                        disabled={!state.dashboard}
+                        fullWidth
+                        variant="filled"
+                        color="green"
+                        radius="md"
+                        loading={loading}
+                    >
+                        Enable
+                        {/*    TODO open plugin config panel*/}
+                    </Button>
+                    <Button
+                        loading={unlinkLoading}
+                        onClick={unlinkPlugin}
+                        disabled={!state.dashboard}
+                        fullWidth
+                        variant="filled"
+                        color="red"
+                        radius="md"
+                    >
+                        Remove
+                        {/*    TODO open plugin config panel*/}
                     </Button>
                 </Card.Section>
             </Card>

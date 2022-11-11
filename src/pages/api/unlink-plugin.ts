@@ -7,7 +7,7 @@ type UnlinkPluginRequestBody = {
     gdcPassword: string;
     workspaceId: string;
     dashboardId: string;
-    backendUrl: string;
+    hostname: string;
     pluginId: string;
     backendType?: "bear" | "tiger";
 };
@@ -21,14 +21,14 @@ export default function unlinkPlugin(req: AddPluginRequest, res: NextApiResponse
         gdcUsername,
         gdcPassword,
         pluginId,
-        backendUrl,
+        hostname,
         workspaceId,
         dashboardId,
         backendType = "bear",
     } = req.body;
 
     const output = execSync(
-        `cross-env GDC_USERNAME=${gdcUsername} GDC_PASSWORD=${gdcPassword}  npx @gooddata/plugin-toolkit dashboard-plugin unlink "${pluginId}" --backend ${backendType} --hostname "${backendUrl}" --workspace-id "${workspaceId}" --dashboard-id "${dashboardId}"`,
+        `cross-env GDC_USERNAME=${gdcUsername} GDC_PASSWORD=${gdcPassword}  npx @gooddata/plugin-toolkit dashboard-plugin unlink "${pluginId}" --backend ${backendType} --hostname "${hostname}" --workspace-id "${workspaceId}" --dashboard-id "${dashboardId}"`,
         { encoding: "utf-8" },
     );
 
