@@ -4,4 +4,5 @@ export interface IPlugin {
     image: string;
     description: string;
     parameters?: string;
+    configMd?: string;
 }

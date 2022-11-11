@@ -38,7 +38,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function DoubleNavbar() {
-    const { classes} = useStyles();
+    const { classes } = useStyles();
     const [active] = useState("Plugin Wrangler");
 
     return (
