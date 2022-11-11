@@ -1,7 +1,7 @@
 import { Button, Card, Group, Image, Switch, Text } from "@mantine/core";
 import { FC, useState } from "react";
 import { useAuth } from "../../../contexts/authContext";
-import { addPlugin, linkPlugin } from "../../../services";
+import { addPlugin, linkPlugin, PluginConfig } from "../../../services";
 
 import { IPlugin } from "../../../types/plugin";
 import { ConfigurationDrawer } from "../../ConfigurationDrawer";
@@ -23,13 +23,24 @@ export const PluginCard: FC<PluginCardProps> = ({ name, image, description, url,
             const gdcUsername = localStorage.getItem("email") as string;
             const gdcPassword = localStorage.getItem("password") as string;
 
-            await addPlugin({
+            const pluginOjectId = await addPlugin({
                 gdcUsername,
                 gdcPassword,
                 pluginUrl: url,
                 hostname: state.domain as string,
                 workspaceId: state.workspace as string,
             });
+
+            const data = await linkPlugin({
+                gdcUsername,
+                gdcPassword,
+                pluginId: pluginOjectId,
+                dashboardId: state.dashboard?.identifier as string,
+                hostname: state.domain as string,
+                workspaceId: state.workspace as string,
+            })
+            console.log("🚀 ~ file: PluginCard.tsx ~ line 42 ~ enablePlugin ~ data", data)
+
         } catch (err) {
             console.warn(err);
         } finally {
@@ -44,14 +55,13 @@ export const PluginCard: FC<PluginCardProps> = ({ name, image, description, url,
             const gdcUsername = localStorage.getItem("email") as string;
             const gdcPassword = localStorage.getItem("password") as string;
 
-            const data = await addPlugin({
+            const data = await addPluginAsync({
                 gdcUsername,
                 gdcPassword,
                 pluginUrl: url,
                 hostname: state.domain as string,
                 workspaceId: state.workspace as string,
             });
-            console.log("🚀 ~ file: PluginCard.tsx ~ line 53 ~ unlinkPlugin ~ data", data);
 
             // const parseData = await data.json();
             // const pluginObjectId = parseData.split(' ').at(-1).replace('\\n\"', '');

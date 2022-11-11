@@ -1,6 +1,5 @@
 import { IPlugin } from "../../types/plugin";
 
-console.log(window.location.hostname);
 const plugins: Record<string, IPlugin> = {
     dashboardDescription: {
         name: "Dashboard Description",

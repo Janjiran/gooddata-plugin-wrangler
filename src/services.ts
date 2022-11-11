@@ -14,7 +14,7 @@ export const getBackend = async (
         .withAuthentication(new FixedLoginAndPasswordAuthProvider(username, password));
 };
 
-type PluginConfig = {
+export type PluginConfig = {
     gdcUsername: string;
     gdcPassword: string;
     pluginUrl: string;
@@ -24,17 +24,21 @@ type PluginConfig = {
 
 export const addPlugin = async (pluginConfig: PluginConfig) => {
     try {
-        return await fetch('/api/add-plugin', {
+        const data = await fetch('/api/add-plugin', {
             body: JSON.stringify(pluginConfig),
             method: 'POST'
         });
+        const objectIdRaw = await data.json();
+        const { objectId } = JSON.parse(objectIdRaw);
+        return objectId.replace('\\n', '');
     } catch(err) {
         console.log(err)
     }
 };
 
 export const linkPlugin = async (pluginConfig: Omit<PluginConfig & {
-    pluginId: string
+    pluginId: string,
+    dashboardId: string
 }, 'pluginUrl'>) => {
     try {
         const data = await fetch('/api/link-plugin', {

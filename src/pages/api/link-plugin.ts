@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+const { exec } = require('promisify-child-process')
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -16,7 +16,7 @@ interface AddPluginRequest extends NextApiRequest {
     body: LinkPluginRequestBody;
 }
 
-export default function linkPlugin(req: AddPluginRequest, res: NextApiResponse) {
+export default async function linkPlugin(req: AddPluginRequest, res: NextApiResponse) {
     const {
         gdcUsername,
         gdcPassword,
@@ -25,12 +25,12 @@ export default function linkPlugin(req: AddPluginRequest, res: NextApiResponse) 
         workspaceId,
         dashboardId,
         backendType = "bear",
-    } = req.body;
+        //@ts-ignore
+    } = JSON.parse(req.body);
 
-    const output = execSync(
-        `cross-env GDC_USERNAME=${gdcUsername} GDC_PASSWORD=${gdcPassword}  npx @gooddata/plugin-toolkit dashboard-plugin link "${pluginId}" --backend ${backendType} --hostname "${hostname}" --workspace-id "${workspaceId}" --dashboard-id "${dashboardId}"`,
-        { encoding: "utf-8", stdio: 'inherit' },
+    const {stdout} = await exec(
+        `cross-env GDC_USERNAME=${gdcUsername} GDC_PASSWORD=${gdcPassword} npx @gooddata/plugin-toolkit dashboard-plugin link "${pluginId}" --backend ${backendType} --hostname "${hostname}" --workspace-id "${workspaceId}" --dashboard-id "${dashboardId}"`,
     );
 
-    res.status(200).send(output.toString());
+    res.status(200).json(JSON.stringify(stdout));
 }
