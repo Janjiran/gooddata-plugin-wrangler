@@ -24,12 +24,10 @@ type PluginConfig = {
 
 export const addPlugin = async (pluginConfig: PluginConfig) => {
     try {
-        const data = await fetch('/api/add-plugin', {
+        return await fetch('/api/add-plugin', {
             body: JSON.stringify(pluginConfig),
             method: 'POST'
         });
-        console.log("🚀 ~ file: services.ts ~ line 31 ~ addPlugin ~ data", data)
-        return data;
     } catch(err) {
         console.log(err)
     }
